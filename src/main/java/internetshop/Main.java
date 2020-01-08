@@ -47,6 +47,6 @@ public class Main {
         itemService.update(soap);
         System.out.println(itemService.getAllItems());
 
-        System.out.println(itemService.get(2).get());
+        System.out.println(itemService.get(2));
     }
 }

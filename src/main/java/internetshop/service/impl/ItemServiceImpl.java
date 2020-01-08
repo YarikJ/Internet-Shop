@@ -7,7 +7,7 @@ import internetshop.model.Item;
 import internetshop.service.ItemService;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -25,8 +25,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Optional<Item> get(long id) {
-        return itemDao.get(id);
+    public Item get(long id) {
+        return itemDao.get(id).orElseThrow(()
+                -> new NoSuchElementException("There is no item with id" + id));
     }
 
     @Override

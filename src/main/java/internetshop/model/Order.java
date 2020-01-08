@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Order {
     private Long idOrder;
     private List<Item> items;
-    private User user;
+    private Long userId;
 
     public Long getIdOrder() {
         return idOrder;
@@ -24,12 +24,12 @@ public class Order {
         this.items = items;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -42,18 +42,18 @@ public class Order {
         }
         Order order = (Order) o;
         return Objects.equals(items, order.items)
-                && Objects.equals(user, order.user);
+                && Objects.equals(userId, order.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(items, user);
+        return Objects.hash(items, userId);
     }
 
     @Override
     public String toString() {
         return "Order{" + "idOrder=" + idOrder
                 + ", items=" + items
-                + ", user=" + user + '}';
+                + ", userId=" + userId + '}';
     }
 }

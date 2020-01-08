@@ -14,7 +14,7 @@ public class BucketDaoImpl implements BucketDao {
 
     @Override
     public Bucket create(Bucket bucket) {
-        bucket.setIdBucket(bucketId++);
+        bucket.setIdBucket(++bucketId);
         Storage.buckets.add(bucket);
         return bucket;
     }
@@ -30,7 +30,7 @@ public class BucketDaoImpl implements BucketDao {
         Bucket bucketToUpdate = get(bucket.getIdBucket())
                 .orElseThrow(() -> new NoSuchElementException("Can't find bucket to update"));
         bucketToUpdate.setItems(bucket.getItems());
-        bucketToUpdate.setUser(bucket.getUser());
+        bucketToUpdate.setUserId(bucket.getUserId());
         return bucketToUpdate;
     }
 

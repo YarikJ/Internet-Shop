@@ -6,7 +6,7 @@ import internetshop.lib.Service;
 import internetshop.model.User;
 import internetshop.service.UserService;
 
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,8 +19,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> get(Long idUser) {
-        return userDao.get(idUser);
+    public User get(Long idUser) {
+        return userDao.get(idUser).orElseThrow(()
+                -> new NoSuchElementException("There is no user with id" + idUser));
     }
 
     @Override

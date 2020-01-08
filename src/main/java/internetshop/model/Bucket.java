@@ -6,14 +6,14 @@ import java.util.Objects;
 public class Bucket {
     private Long idBucket;
     private List<Item> items;
-    private User user;
+    private Long userId;
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Long getIdBucket() {
@@ -42,18 +42,18 @@ public class Bucket {
         }
         Bucket bucket = (Bucket) o;
         return Objects.equals(items, bucket.items)
-                && Objects.equals(user, bucket.user);
+                && Objects.equals(userId, bucket.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(items, user);
+        return Objects.hash(items, userId);
     }
 
     @Override
     public String toString() {
         return "Bucket{" + "idBucket=" + idBucket
                 + ", items=" + items
-                + ", user=" + user + '}';
+                + ", userId=" + userId + '}';
     }
 }

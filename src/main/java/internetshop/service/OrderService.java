@@ -5,10 +5,9 @@ import internetshop.model.Order;
 import internetshop.model.User;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface OrderService {
-    Optional<Order> getOrder(Long idOrder);
+    Order getOrder(Long idOrder);
 
     Order update(Order order);
 

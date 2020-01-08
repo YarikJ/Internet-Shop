@@ -4,12 +4,11 @@ import internetshop.model.Bucket;
 import internetshop.model.Item;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface BucketService {
     Bucket create(Bucket bucket);
 
-    Optional<Bucket> get(Long idBucket);
+    Bucket get(Long idBucket);
 
     Bucket update(Bucket bucket);
 
