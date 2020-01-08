@@ -10,10 +10,12 @@ import java.util.Optional;
 
 @Dao
 public class BucketDaoImpl implements BucketDao {
+    private static Long bucketId = 0L;
 
     @Override
     public Bucket create(Bucket bucket) {
-        Storage.addToBuckets(bucket);
+        bucket.setIdBucket(bucketId++);
+        Storage.buckets.add(bucket);
         return bucket;
     }
 

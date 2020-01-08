@@ -11,9 +11,12 @@ import java.util.Optional;
 
 @Dao
 public class ItemDaoImpl implements ItemDao {
+    private static Long itemId = 0L;
+
     @Override
     public Item create(Item item) {
-        Storage.addToItems(item);
+        item.setIdItem(itemId++);
+        Storage.items.add(item);
         return item;
     }
 

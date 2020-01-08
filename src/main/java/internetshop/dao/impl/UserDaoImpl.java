@@ -10,10 +10,12 @@ import java.util.Optional;
 
 @Dao
 public class UserDaoImpl implements UserDao {
+    private static Long userId = 0L;
 
     @Override
     public User create(User user) {
-        Storage.addToUsers(user);
+        user.setIdUser(userId++);
+        Storage.users.add(user);
         return user;
     }
 
@@ -28,8 +30,6 @@ public class UserDaoImpl implements UserDao {
         User userToUpdate = get(user.getIdUser())
                 .orElseThrow(() -> new NoSuchElementException("Can't find user to update"));
         userToUpdate.setName(user.getName());
-        userToUpdate.setBucket(user.getBucket());
-        userToUpdate.setOrderList(user.getOrderList());
         userToUpdate.setPassword(user.getPassword());
         return userToUpdate;
     }

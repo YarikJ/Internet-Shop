@@ -9,7 +9,7 @@ import internetshop.model.User;
 import internetshop.service.OrderService;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -17,9 +17,8 @@ public class OrderServiceImpl implements OrderService {
     private static OrderDao orderDao;
 
     @Override
-    public Order getOrder(Long idOrder) {
-        return orderDao.get(idOrder).orElseThrow(()
-                -> new NoSuchElementException("There is no order with id" + idOrder));
+    public Optional<Order> getOrder(Long idOrder) {
+        return orderDao.get(idOrder);
     }
 
     @Override
@@ -43,6 +42,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getUserOrders(User user) {
-        return user.getOrderList();
+        return orderDao.getUserOrders(user);
     }
 }

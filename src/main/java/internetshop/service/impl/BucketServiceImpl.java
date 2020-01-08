@@ -10,6 +10,7 @@ import internetshop.service.BucketService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class BucketServiceImpl implements BucketService {
@@ -24,9 +25,8 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
-    public Bucket get(Long idBucket) {
-        return bucketDao.get(idBucket).orElseThrow(()
-                -> new NoSuchElementException("There is no bucket with id" + idBucket));
+    public Optional<Bucket> get(Long idBucket) {
+        return bucketDao.get(idBucket);
     }
 
     @Override

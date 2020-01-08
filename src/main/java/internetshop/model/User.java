@@ -1,14 +1,11 @@
 package internetshop.model;
 
-import java.util.List;
 import java.util.Objects;
 
 public class User {
     private String name;
     private String password;
     private Long idUser;
-    private Bucket bucket;
-    private List<Order> orderList;
 
     public User(String name, String password) {
         this.name = name;
@@ -39,28 +36,11 @@ public class User {
         this.idUser = idUser;
     }
 
-    public Bucket getBucket() {
-        return bucket;
-    }
-
-    public void setBucket(Bucket bucket) {
-        this.bucket = bucket;
-    }
-
-    public List<Order> getOrderList() {
-        return orderList;
-    }
-
-    public void setOrderList(List<Order> orderList) {
-        this.orderList = orderList;
-    }
-
     @Override
     public String toString() {
         return "User{" + "name='" + name + '\''
                 + ", password='" + password + '\''
-                + ", idUser=" + idUser + ", bucket=" + bucket
-                + ", orderList=" + orderList + '}';
+                + ", idUser=" + idUser + '}';
     }
 
     @Override
