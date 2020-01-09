@@ -25,7 +25,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item get(long id) {
+    public Item get(Long id) {
         return itemDao.get(id).orElseThrow(()
                 -> new NoSuchElementException("There is no item with id" + id));
     }

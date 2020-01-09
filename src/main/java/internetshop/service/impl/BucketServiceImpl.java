@@ -41,11 +41,9 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public void addItem(Long idBucket, Long idItem) {
-        Bucket bucket = bucketDao.get(idBucket).orElseThrow(()
-                -> new NoSuchElementException("There is no bucket with id " + idBucket));
         Item item = itemDao.get(idItem).orElseThrow(()
                 -> new NoSuchElementException("There is no item with id " + idItem));
-        bucket.getItems().add(item);
+        get(idBucket).getItems().add(item);
     }
 
     @Override
