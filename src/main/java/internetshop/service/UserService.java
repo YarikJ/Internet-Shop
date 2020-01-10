@@ -11,7 +11,7 @@ public interface UserService {
 
     User update(User user);
 
-    boolean delete(User user);
+    boolean delete(Long userId);
 
     List<User> getAll();
 }

@@ -21,6 +21,23 @@
         <servlet-name>allUsers</servlet-name>
         <url-pattern>/servlet/getAllUsers</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>registration</servlet-name>
+        <servlet-class>internetshop.controller.RegistrationController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>registration</servlet-name>
+        <url-pattern>/servlet/registration</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteUser</servlet-name>
+        <servlet-class>internetshop.controller.DeleteUserController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteUser</servlet-name>
+        <url-pattern>/servlet/deleteUser</url-pattern>
+    </servlet-mapping>
 
     <listener>
         <listener-class>internetshop.controller.InjectInitializer</listener-class>
