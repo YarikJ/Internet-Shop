@@ -3,6 +3,7 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
 		 http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
     <servlet>
         <servlet-name>index</servlet-name>
         <servlet-class>internetshop.controller.IndexController</servlet-class>
@@ -11,4 +12,19 @@
         <servlet-name>index</servlet-name>
         <url-pattern>/index</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>allUsers</servlet-name>
+        <servlet-class>internetshop.controller.GetAllUsersController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>allUsers</servlet-name>
+        <url-pattern>/servlet/getAllUsers</url-pattern>
+    </servlet-mapping>
+
+    <listener>
+        <listener-class>internetshop.controller.InjectInitializer</listener-class>
+    </listener>
+
+
 </web-app>
