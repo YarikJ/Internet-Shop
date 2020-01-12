@@ -9,6 +9,7 @@
     <title>All Users</title>
 </head>
 <body>
+<a href="${pageContext.request.contextPath}/shop">Home</a>
 <b>Hello, ${greeting}, Welcome to the All Users page!!!</b>
 
 <br>Here is a list of users:</br>
@@ -27,7 +28,7 @@
                 <c:out value="${user.name}" />
             </td>
             <td>
-                <a href="/internetshopyarik_war_exploded/servlet/deleteUser?user_id=${user.idUser}">DELETE</a>
+                <a href="${pageContext.request.contextPath}/servlet/deleteUser?user_id=${user.idUser}">DELETE</a>
             </td>
         </tr>
     </c:forEach>

@@ -33,11 +33,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order completeOrder(List<Item> items, User user) {
+    public Order completeOrder(List<Item> items, Long userId) {
         Order order = new Order();
+
         order.setItems(items);
-        order.setUserId(user.getIdUser());
+        order.setUserId(userId);
         orderDao.create(order);
+
         return order;
     }
 

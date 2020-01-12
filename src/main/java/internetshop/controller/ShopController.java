@@ -1,22 +1,25 @@
 package internetshop.controller;
 
 import internetshop.lib.Inject;
-import internetshop.service.UserService;
+import internetshop.model.Item;
+import internetshop.service.ItemService;
+
 import java.io.IOException;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class DeleteUserController extends HttpServlet {
+public class ShopController extends HttpServlet {
     @Inject
-    private static UserService userService;
+    private static ItemService itemService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String userId = req.getParameter("user_id");
-        userService.delete(Long.valueOf(userId));
-        resp.sendRedirect(req.getContextPath() + "/servlet/getAllUsers");
+        List<Item> items = itemService.getAllItems();
+        req.setAttribute("users", items);
+        req.getRequestDispatcher("/WEB-INF/views/shop.jsp").forward(req, resp);
     }
 }

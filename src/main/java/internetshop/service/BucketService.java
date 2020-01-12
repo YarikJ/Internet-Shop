@@ -6,9 +6,9 @@ import internetshop.model.Item;
 import java.util.List;
 
 public interface BucketService {
-    Bucket create(Bucket bucket);
+    Bucket getByBucketId(Long bucketId);
 
-    Bucket get(Long idBucket);
+    Bucket getByUserId(Long userId);
 
     Bucket update(Bucket bucket);
 

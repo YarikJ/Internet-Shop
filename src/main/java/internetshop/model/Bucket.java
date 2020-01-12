@@ -1,5 +1,6 @@
 package internetshop.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -7,6 +8,11 @@ public class Bucket {
     private Long idBucket;
     private List<Item> items;
     private Long userId;
+
+    public Bucket(Long userId) {
+        items = new ArrayList<>();
+        this.userId = userId;
+    }
 
     public Long getUserId() {
         return userId;

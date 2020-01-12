@@ -19,9 +19,6 @@ public class GetAllUsersController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-//        userService.create(new User("Tom", "asdf"));
-//        userService.create(new User("Bill", "asdf"));
-//        userService.create(new User("Jack", "asdf"));
 
         List<User> users = userService.getAll();
         req.setAttribute("greeting", "Mates");

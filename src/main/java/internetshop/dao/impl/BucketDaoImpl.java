@@ -20,14 +20,20 @@ public class BucketDaoImpl implements BucketDao {
     }
 
     @Override
-    public Optional<Bucket> get(Long bucketId) {
+    public Optional<Bucket> getByBucketId(Long bucketId) {
         return Storage.buckets.stream()
                 .filter(b -> b.getIdBucket().equals(bucketId)).findFirst();
     }
 
     @Override
+    public Optional<Bucket> getByUserId(Long userId) {
+        return Storage.buckets.stream()
+                .filter(b -> b.getUserId().equals(userId)).findFirst();
+    }
+
+    @Override
     public Bucket update(Bucket bucket) {
-        Bucket bucketToUpdate = get(bucket.getIdBucket())
+        Bucket bucketToUpdate = getByBucketId(bucket.getIdBucket())
                 .orElseThrow(() -> new NoSuchElementException("Can't find bucket to update"));
         bucketToUpdate.setItems(bucket.getItems());
         bucketToUpdate.setUserId(bucket.getUserId());
