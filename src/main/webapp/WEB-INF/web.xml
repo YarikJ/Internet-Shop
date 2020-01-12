@@ -93,8 +93,6 @@
         <url-pattern>/servlet/order</url-pattern>
     </servlet-mapping>
 
-
-
     <listener>
         <listener-class>internetshop.controller.InjectInitializer</listener-class>
     </listener>

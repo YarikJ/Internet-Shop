@@ -32,7 +32,6 @@ public class BucketServiceImpl implements BucketService {
         return byUserId.orElseGet(() -> bucketDao.create(new Bucket(userId)));
     }
 
-
     @Override
     public Bucket update(Bucket bucket) {
         return bucketDao.update(bucket);

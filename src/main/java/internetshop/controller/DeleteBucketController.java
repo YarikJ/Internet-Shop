@@ -3,12 +3,11 @@ package internetshop.controller;
 import internetshop.lib.Inject;
 import internetshop.service.BucketService;
 import internetshop.service.ItemService;
-
+import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 public class DeleteBucketController extends HttpServlet {
     @Inject
@@ -22,7 +21,8 @@ public class DeleteBucketController extends HttpServlet {
             throws ServletException, IOException {
         String itemId = req.getParameter("item_id");
 
-        bucketService.deleteItem(bucketService.getByUserId(USER_ID), itemService.get(Long.valueOf(itemId)));
+        bucketService.deleteItem(bucketService.getByUserId(USER_ID),
+                itemService.get(Long.valueOf(itemId)));
         resp.sendRedirect(req.getContextPath() + "/servlet/bucket");
     }
 }
