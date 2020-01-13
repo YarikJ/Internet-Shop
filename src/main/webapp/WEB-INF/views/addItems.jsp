@@ -3,6 +3,11 @@
 <head>
     <title>Add items</title>
     <style>
+        body {
+            margin: 0 auto;
+            padding: 20px;
+            width: 800px;
+        }
         a {
             background-color: #4CAF50;
             border: none;
