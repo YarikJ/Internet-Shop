@@ -1,19 +1,29 @@
 package internetshop.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Bucket {
     private Long idBucket;
     private List<Item> items;
-    private Long userId;
+    private User user;
 
-    public Long getUserId() {
-        return userId;
+    public Bucket(User user) {
+        items = new ArrayList<>();
+        this.user = user;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public Bucket() {
+        items = new ArrayList<>();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getIdBucket() {
@@ -42,18 +52,18 @@ public class Bucket {
         }
         Bucket bucket = (Bucket) o;
         return Objects.equals(items, bucket.items)
-                && Objects.equals(userId, bucket.userId);
+                && Objects.equals(user, bucket.user);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(items, userId);
+        return Objects.hash(items, user);
     }
 
     @Override
     public String toString() {
         return "Bucket{" + "idBucket=" + idBucket
                 + ", items=" + items
-                + ", userId=" + userId + '}';
+                + ", userId=" + user + '}';
     }
 }

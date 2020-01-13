@@ -5,6 +5,7 @@ import internetshop.lib.Dao;
 import internetshop.model.User;
 import internetshop.storage.Storage;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -14,7 +15,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User create(User user) {
-        user.setIdUser(++userId);
+        user.setUserId(++userId);
         Storage.users.add(user);
         return user;
     }
@@ -22,12 +23,12 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> get(Long idUser) {
         return Storage.users.stream()
-                .filter(u -> u.getIdUser().equals(idUser)).findFirst();
+                .filter(u -> u.getUserId().equals(idUser)).findFirst();
     }
 
     @Override
     public User update(User user) {
-        User userToUpdate = get(user.getIdUser())
+        User userToUpdate = get(user.getUserId())
                 .orElseThrow(() -> new NoSuchElementException("Can't find user to update"));
         userToUpdate.setName(user.getName());
         userToUpdate.setPassword(user.getPassword());
@@ -37,5 +38,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public boolean delete(User user) {
         return Storage.users.remove(user);
+    }
+
+    @Override
+    public List<User> getAll() {
+        return Storage.users;
     }
 }

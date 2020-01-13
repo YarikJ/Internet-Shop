@@ -13,7 +13,7 @@ public interface OrderService {
 
     boolean deleteOrder(Order order);
 
-    Order completeOrder(List<Item> items, User user);
+    Order completeOrder(List<Item> items, Long userId);
 
     List<Order> getUserOrders(User user);
 }

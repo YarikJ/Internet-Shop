@@ -5,7 +5,7 @@ import java.util.Objects;
 public class User {
     private String name;
     private String password;
-    private Long idUser;
+    private Long userId;
 
     public User(String name, String password) {
         this.name = name;
@@ -28,19 +28,18 @@ public class User {
         this.password = password;
     }
 
-    public Long getIdUser() {
-        return idUser;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setIdUser(Long idUser) {
-        this.idUser = idUser;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     @Override
     public String toString() {
         return "User{" + "name='" + name + '\''
-                + ", password='" + password + '\''
-                + ", idUser=" + idUser + '}';
+                + ", idUser=" + userId + '}';
     }
 
     @Override
