@@ -32,7 +32,9 @@ public class BucketServiceImpl implements BucketService {
     public Bucket getByUserId(Long userId) {
         Optional<Bucket> byUserId = bucketDao.getByUserId(userId);
 
-        return byUserId.orElseGet(() -> bucketDao.create(new Bucket(userDao.get(userId).get())));
+        return byUserId.orElseGet(()
+                -> bucketDao.create(new Bucket(userDao.get(userId).orElseThrow(()
+                        -> new NoSuchElementException("There is no user with id" + userId)))));
     }
 
     @Override
