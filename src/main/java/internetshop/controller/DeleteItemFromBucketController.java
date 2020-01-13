@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class DeleteBucketController extends HttpServlet {
+public class DeleteItemFromBucketController extends HttpServlet {
     @Inject
     private static BucketService bucketService;
     @Inject

@@ -1,6 +1,7 @@
 package internetshop.service.impl;
 
 import internetshop.dao.OrderDao;
+import internetshop.dao.UserDao;
 import internetshop.lib.Inject;
 import internetshop.lib.Service;
 import internetshop.model.Item;
@@ -15,6 +16,8 @@ import java.util.NoSuchElementException;
 public class OrderServiceImpl implements OrderService {
     @Inject
     private static OrderDao orderDao;
+    @Inject
+    private static UserDao userDao;
 
     @Override
     public Order getOrder(Long idOrder) {
@@ -37,7 +40,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
 
         order.setItems(items);
-        order.setUserId(userId);
+        order.setUser(userDao.get(userId).get());
         orderDao.create(order);
 
         return order;

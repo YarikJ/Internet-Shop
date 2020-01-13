@@ -1,7 +1,5 @@
 package internetshop.controller;
 
-import static internetshop.controller.DeleteBucketController.USER_ID;
-
 import internetshop.lib.Inject;
 import internetshop.model.Bucket;
 import internetshop.model.Order;
@@ -13,17 +11,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class UserOrderController extends HttpServlet {
+public class CompleteOrderController extends HttpServlet {
     @Inject
     private static OrderService orderService;
     @Inject
     private static BucketService bucketService;
+    private static final Long USER_ID  = 1L;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String bucketId = req.getParameter("id");
-        Bucket bucket = bucketService.getByBucketId(Long.valueOf(bucketId));
+        String userId = req.getParameter("id");
+        Bucket bucket = bucketService.getByBucketId(Long.valueOf(userId));
         Order order = orderService.completeOrder(bucket.getItems(), USER_ID);
 
         bucketService.delete(bucket);

@@ -61,7 +61,7 @@
     </c:forEach>
 </table>
 
-<form action="${pageContext.request.contextPath}/servlet/order?id=${bucket.idBucket}" method="post">
+<form action="${pageContext.request.contextPath}/servlet/order?id=${bucket.user.userId}" method="post">
     <button type="submit">Complete order</button>
 </form>
 <a href="${pageContext.request.contextPath}/servlet/allItems">Continue shopping</a>

@@ -2,6 +2,7 @@ package internetshop.service.impl;
 
 import internetshop.dao.BucketDao;
 import internetshop.dao.ItemDao;
+import internetshop.dao.UserDao;
 import internetshop.lib.Inject;
 import internetshop.lib.Service;
 import internetshop.model.Bucket;
@@ -18,6 +19,8 @@ public class BucketServiceImpl implements BucketService {
     private static BucketDao bucketDao;
     @Inject
     private static ItemDao itemDao;
+    @Inject
+    private static UserDao userDao;
 
     @Override
     public Bucket getByBucketId(Long idBucket) {
@@ -29,7 +32,7 @@ public class BucketServiceImpl implements BucketService {
     public Bucket getByUserId(Long userId) {
         Optional<Bucket> byUserId = bucketDao.getByUserId(userId);
 
-        return byUserId.orElseGet(() -> bucketDao.create(new Bucket(userId)));
+        return byUserId.orElseGet(() -> bucketDao.create(new Bucket(userDao.get(userId).get())));
     }
 
     @Override

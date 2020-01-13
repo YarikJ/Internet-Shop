@@ -68,7 +68,7 @@
 
     <servlet>
         <servlet-name>addBucket</servlet-name>
-        <servlet-class>internetshop.controller.BucketController</servlet-class>
+        <servlet-class>internetshop.controller.AddItemToBucketController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>addBucket</servlet-name>
@@ -77,7 +77,7 @@
 
     <servlet>
         <servlet-name>deleteBucket</servlet-name>
-        <servlet-class>internetshop.controller.DeleteBucketController</servlet-class>
+        <servlet-class>internetshop.controller.DeleteItemFromBucketController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteBucket</servlet-name>
@@ -86,7 +86,7 @@
 
     <servlet>
         <servlet-name>order</servlet-name>
-        <servlet-class>internetshop.controller.UserOrderController</servlet-class>
+        <servlet-class>internetshop.controller.CompleteOrderController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>order</servlet-name>

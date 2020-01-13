@@ -46,13 +46,13 @@
     <c:forEach var="user" items="${users}">
         <tr>
             <td>
-                <c:out value="${user.idUser}" />
+                <c:out value="${user.userId}" />
             </td>
             <td>
                 <c:out value="${user.name}" />
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/servlet/deleteUser?user_id=${user.idUser}">DELETE</a>
+                <a href="${pageContext.request.contextPath}/servlet/deleteUser?user_id=${user.userId}">DELETE</a>
             </td>
         </tr>
     </c:forEach>

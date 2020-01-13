@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class BucketController extends HttpServlet {
+public class AddItemToBucketController extends HttpServlet {
     @Inject
     private static BucketService bucketService;
     @Inject
@@ -27,7 +27,6 @@ public class BucketController extends HttpServlet {
         if (req.getParameter("item_id") != null) {
             bucket.getItems().add(itemService.get(Long.valueOf(req.getParameter("item_id"))));
         }
-
         req.getRequestDispatcher("/WEB-INF/views/addBucket.jsp").forward(req, resp);
     }
 }
