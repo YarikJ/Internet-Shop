@@ -2,6 +2,7 @@ package internetshop.dao;
 
 import internetshop.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserDao {
@@ -12,4 +13,6 @@ public interface UserDao {
     User update(User user);
 
     boolean delete(User user);
+
+    List<User> getAll();
 }

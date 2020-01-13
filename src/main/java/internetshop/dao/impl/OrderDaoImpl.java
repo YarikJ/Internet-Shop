@@ -17,21 +17,21 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order create(Order order) {
-        order.setIdOrder(++orderId);
+        order.setOrderId(++orderId);
         Storage.orders.add(order);
         return order;
     }
 
     @Override
     public Optional<Order> get(Long idOrder) {
-        return Storage.orders.stream().filter(o -> o.getIdOrder().equals(idOrder)).findFirst();
+        return Storage.orders.stream().filter(o -> o.getOrderId().equals(idOrder)).findFirst();
     }
 
     @Override
     public Order update(Order order) {
-        Order orderToUpdate = get(order.getIdOrder())
+        Order orderToUpdate = get(order.getOrderId())
                 .orElseThrow(() -> new NoSuchElementException("Can't find item to update"));
-        orderToUpdate.setUserId(order.getUserId());
+        orderToUpdate.setUser(order.getUser());
         orderToUpdate.setItems(order.getItems());
         return orderToUpdate;
     }
@@ -45,8 +45,8 @@ public class OrderDaoImpl implements OrderDao {
     public List<Order> getUserOrders(User user) {
         return Storage.orders
                 .stream()
-                .filter(o -> o.getUserId()
-                        .equals(user.getIdUser()))
+                .filter(o -> o.getUser()
+                        .equals(user))
                 .collect(Collectors.toList());
     }
 }
