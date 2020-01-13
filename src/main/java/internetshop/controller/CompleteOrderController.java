@@ -16,14 +16,13 @@ public class CompleteOrderController extends HttpServlet {
     private static OrderService orderService;
     @Inject
     private static BucketService bucketService;
-    private static final Long USER_ID  = 1L;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String userId = req.getParameter("id");
-        Bucket bucket = bucketService.getByBucketId(Long.valueOf(userId));
-        Order order = orderService.completeOrder(bucket.getItems(), USER_ID);
+        Long userId = Long.valueOf(req.getParameter("id"));
+        Bucket bucket = bucketService.getByUserId(userId);
+        Order order = orderService.completeOrder(bucket.getItems(), userId);
 
         bucketService.delete(bucket);
         req.setAttribute("order", order);
