@@ -1,18 +1,20 @@
 package internetshop.controller;
 
 import internetshop.lib.Injector;
-
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import org.apache.log4j.Logger;
 
 public class InjectInitializer implements ServletContextListener {
+    private static final Logger logger = Logger.getLogger(InjectInitializer.class);
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try {
-            System.out.println("Dependency injection started");
+            logger.info("Dependency injection started");
             Injector.injectDependency();
-            System.out.println("Dependency injection is done");
         } catch (IllegalAccessException e) {
+            logger.error("Can't initialize all dependencies", e);
             throw new RuntimeException(e);
         }
     }
