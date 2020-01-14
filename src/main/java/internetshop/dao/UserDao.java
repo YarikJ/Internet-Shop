@@ -15,4 +15,8 @@ public interface UserDao {
     boolean delete(User user);
 
     List<User> getAll();
+
+    Optional<User> logIn(String name);
+
+    Optional<User> getByToken(String token);
 }

@@ -19,7 +19,6 @@ public class GetAllUsersController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-
         List<User> users = userService.getAll();
         req.setAttribute("greeting", "Mates");
         req.setAttribute("users", users);

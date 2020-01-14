@@ -60,7 +60,9 @@
     </c:forEach>
 </table>
 
-<form action="${pageContext.request.contextPath}/servlet/order?id=${bucket.user.userId}" method="post">
+<%--<form action="${pageContext.request.contextPath}/servlet/order?id=${bucket.user.userId}" method="post">--%>
+<form action="${pageContext.request.contextPath}/servlet/order" method="post">
+
     <button type="submit">Complete order</button>
 </form>
 <a class="selected" href="${pageContext.request.contextPath}/servlet/allItems">Continue shopping</a>

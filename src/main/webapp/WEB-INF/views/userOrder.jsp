@@ -4,13 +4,38 @@
 <html>
 <head>
     <title>Order</title>
+    <style>
+
+        body {
+            margin: 0 auto;
+            padding: 20px;
+            width: 800px;
+        }
+
+        a.selected {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            user-select: none;
+        }
+
+        a:hover {
+            background-color: green;
+        }
+    </style>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/shop">Home</a>
-<b>
-    Thank you for your order! We will call you in a few minutes
-</b>
-<br>Ordered items</br>
+<a class="selected" href="${pageContext.request.contextPath}/shop">Home</a>
+
+<p><b>Thank you for your order! We will call you in a few minutes </b></p>
+
+<p><br>Ordered items</br>
+</p>
 <table border="1">
     <tr>
         <th>ID</th>
