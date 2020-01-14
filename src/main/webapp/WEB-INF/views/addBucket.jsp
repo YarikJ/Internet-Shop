@@ -13,7 +13,7 @@
             width: 800px;
         }
 
-        a {
+        a.selected {
             background-color: #4CAF50;
             border: none;
             color: white;
@@ -31,11 +31,10 @@
     </style>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/shop">Home</a>
-<b>
-    Bucket
-</b>
-<br>Here is a list of items:</br>
+<a class="selected" href="${pageContext.request.contextPath}/shop">Home</a>
+
+<p><b> Bucket </b></p>
+
 <table border="1">
     <tr>
         <th>ID</th>
@@ -64,6 +63,6 @@
 <form action="${pageContext.request.contextPath}/servlet/order?id=${bucket.user.userId}" method="post">
     <button type="submit">Complete order</button>
 </form>
-<a href="${pageContext.request.contextPath}/servlet/allItems">Continue shopping</a>
+<a class="selected" href="${pageContext.request.contextPath}/servlet/allItems">Continue shopping</a>
 </body>
 </html>

@@ -13,7 +13,7 @@
             width: 800px;
         }
 
-        a {
+        a.selected {
             background-color: #4CAF50;
             border: none;
             color: white;
@@ -31,8 +31,9 @@
     </style>
 </head>
 <body>
-<a href="${pageContext.request.contextPath}/shop">Home</a>
-<br>Here is a list of users:</br>
+<a class="selected" href="${pageContext.request.contextPath}/shop">Home</a>
+<p><h1>List of items:</h1>
+</p>
 <table border="1">
     <tr>
         <th>ID</th>
@@ -57,6 +58,8 @@
         </tr>
     </c:forEach>
 </table>
-<a href="${pageContext.request.contextPath}/servlet/item">Add items</a>
+<p>
+<a class="selected" href="${pageContext.request.contextPath}/servlet/item">Add items</a>
+</p>
 </body>
 </html>
