@@ -5,6 +5,7 @@ import java.util.Objects;
 public class User {
     private String name;
     private String password;
+    private String token;
     private Long userId;
 
     public User(String name, String password) {
@@ -34,6 +35,14 @@ public class User {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override
