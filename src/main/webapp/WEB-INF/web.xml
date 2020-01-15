@@ -102,6 +102,15 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>allOrders</servlet-name>
+        <servlet-class>internetshop.controller.GetAllUserOrdersController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>allOrders</servlet-name>
+        <url-pattern>/servlet/allOrders</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>authenticationFilter</filter-name>
         <filter-class>internetshop.filters.AuthenticationFilter</filter-class>

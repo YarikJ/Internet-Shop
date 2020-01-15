@@ -17,7 +17,7 @@ public interface UserService {
 
     List<User> getAll();
 
-    User logIn(String name, String pass) throws AuthorizationException;
+    User login(String name, String pass) throws AuthorizationException;
 
     Optional<User> getByToken(String token);
 }

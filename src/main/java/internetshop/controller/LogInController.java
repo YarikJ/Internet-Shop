@@ -28,7 +28,7 @@ public class LogInController extends HttpServlet {
         String name = req.getParameter("name");
         String pass = req.getParameter("psw");
         try {
-            User user = userService.logIn(name, pass);
+            User user = userService.login(name, pass);
 
             HttpSession session = req.getSession(true);
             session.setAttribute("userId", user.getUserId());

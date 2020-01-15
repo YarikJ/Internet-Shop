@@ -58,6 +58,9 @@
         <li>
             <a href="${pageContext.request.contextPath}/servlet/bucket">Bucket</a>
         </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/servlet/allOrders">All Orders</a>
+        </li>
     </ul>
 </nav>
 <main>

@@ -45,8 +45,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User logIn(String name, String pass) throws AuthorizationException {
-        Optional<User> user = userDao.logIn(name);
+    public User login(String name, String pass) throws AuthorizationException {
+        Optional<User> user = userDao.login(name);
         if (user.isEmpty() || !user.get().getPassword().equals(pass)) {
             throw new AuthorizationException("incorrect user name or password");
         }

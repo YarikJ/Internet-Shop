@@ -22,8 +22,9 @@ public class AddItemToBucketController extends HttpServlet {
         Long userId = (Long) req.getSession().getAttribute("userId");
         Bucket bucket = bucketService.getByUserId(userId);
 
-        bucket.getItems().add(itemService.get(Long.valueOf(req.getParameter("item_id"))));
-        bucketService.update(bucket);
+        bucketService.addItem(bucket.getIdBucket(),
+                Long.valueOf(req.getParameter("item_id")));
+
         req.setAttribute("bucket", bucket);
 
         req.getRequestDispatcher("/WEB-INF/views/addBucket.jsp").forward(req, resp);

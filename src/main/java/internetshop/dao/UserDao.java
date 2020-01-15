@@ -16,7 +16,7 @@ public interface UserDao {
 
     List<User> getAll();
 
-    Optional<User> logIn(String name);
+    Optional<User> login(String name);
 
     Optional<User> getByToken(String token);
 }
