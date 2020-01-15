@@ -44,7 +44,7 @@
 <nav>
     <ul>
         <li>
-            <a class="selected" href="${pageContext.request.contextPath}/servlet/registration">Registration</a>
+            <a class="selected" href="${pageContext.request.contextPath}/registration">Registration</a>
         </li>
         <li>
             <a href="${pageContext.request.contextPath}/servlet/getAllUsers">View all users</a>
@@ -57,6 +57,9 @@
         </li>
         <li>
             <a href="${pageContext.request.contextPath}/servlet/bucket">Bucket</a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/servlet/allOrders">All Orders</a>
         </li>
     </ul>
 </nav>

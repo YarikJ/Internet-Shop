@@ -1,6 +1,7 @@
 package internetshop.service.impl;
 
 import internetshop.dao.UserDao;
+import internetshop.exceptions.AuthorizationException;
 import internetshop.lib.Inject;
 import internetshop.lib.Service;
 import internetshop.model.User;
@@ -8,6 +9,8 @@ import internetshop.service.UserService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,6 +19,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
+        user.setToken(getToken());
         return userDao.create(user);
     }
 
@@ -38,5 +42,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAll() {
         return userDao.getAll();
+    }
+
+    @Override
+    public User login(String name, String pass) throws AuthorizationException {
+        Optional<User> user = userDao.login(name);
+        if (user.isEmpty() || !user.get().getPassword().equals(pass)) {
+            throw new AuthorizationException("incorrect user name or password");
+        }
+        return user.get();
+    }
+
+    @Override
+    public Optional<User> getByToken(String token) {
+        return userDao.getByToken(token);
+    }
+
+    private String getToken() {
+        return UUID.randomUUID().toString();
     }
 }
