@@ -21,11 +21,15 @@ public class AddItemToBucketController extends HttpServlet {
             throws ServletException, IOException {
         Long userId = (Long) req.getSession().getAttribute("userId");
         Bucket bucket = bucketService.getByUserId(userId);
+        req.setAttribute("bucket", bucket);
+        if (req.getParameter("item_id") == null) {
+            req.setAttribute("msg", "Bucket is empty");
+            req.getRequestDispatcher("/WEB-INF/views/addBucket.jsp").forward(req, resp);
+            return;
+        }
 
         bucketService.addItem(bucket.getIdBucket(),
                 Long.valueOf(req.getParameter("item_id")));
-
-        req.setAttribute("bucket", bucket);
 
         req.getRequestDispatcher("/WEB-INF/views/addBucket.jsp").forward(req, resp);
     }
