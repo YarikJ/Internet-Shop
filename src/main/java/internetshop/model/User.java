@@ -1,12 +1,15 @@
 package internetshop.model;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class User {
     private String name;
     private String password;
     private String token;
     private Long userId;
+    private Set<Role> roles = new HashSet<>();
 
     public User(String name, String password) {
         this.name = name;
@@ -45,6 +48,14 @@ public class User {
         this.token = token;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public String toString() {
         return "User{" + "name='" + name + '\''
@@ -67,5 +78,9 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(name, password);
+    }
+
+    public void addRole(Role role) {
+        roles.add(role);
     }
 }

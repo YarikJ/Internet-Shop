@@ -21,6 +21,7 @@
         <servlet-name>allUsers</servlet-name>
         <url-pattern>/servlet/getAllUsers</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>registration</servlet-name>
         <servlet-class>internetshop.controller.RegistrationController</servlet-class>
@@ -111,12 +112,39 @@
         <url-pattern>/servlet/allOrders</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>injectData</servlet-name>
+        <servlet-class>internetshop.controller.InjectDataController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>injectData</servlet-name>
+        <url-pattern>/inject</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>logOut</servlet-name>
+        <servlet-class>internetshop.controller.LogOutController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logOut</servlet-name>
+        <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>authenticationFilter</filter-name>
         <filter-class>internetshop.filters.AuthenticationFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>authenticationFilter</filter-name>
+        <url-pattern>/servlet/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>accessFilter</filter-name>
+        <filter-class>internetshop.filters.AuthorizationFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>accessFilter</filter-name>
         <url-pattern>/servlet/*</url-pattern>
     </filter-mapping>
 
