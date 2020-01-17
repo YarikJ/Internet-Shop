@@ -73,6 +73,15 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>addBucket</servlet-name>
+        <url-pattern>/servlet/addToBucket</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>showBucket</servlet-name>
+        <servlet-class>internetshop.controller.ShowBucketController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>showBucket</servlet-name>
         <url-pattern>/servlet/bucket</url-pattern>
     </servlet-mapping>
 
