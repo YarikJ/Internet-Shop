@@ -59,11 +59,19 @@
         </tr>
     </c:forEach>
 </table>
-
+<p></p>
+<div> <b>${msg}</b></div>
+</p>
+<p>
 <form action="${pageContext.request.contextPath}/servlet/order" method="post">
 
-    <button type="submit">Complete order</button>
+    <c:if test="${!bucket.items.isEmpty()}">
+        <button type="submit">Complete order</button>
+    </c:if>
 </form>
+</p>
+<p>
 <a class="selected" href="${pageContext.request.contextPath}/servlet/allItems">Continue shopping</a>
+</p>
 </body>
 </html>

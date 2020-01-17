@@ -7,7 +7,7 @@
         body {
             margin: 0 auto;
             padding: 20px;
-            width: 800px;
+            width: 1000px;
         }
 
         ul {
@@ -60,6 +60,9 @@
         </li>
         <li>
             <a href="${pageContext.request.contextPath}/servlet/allOrders">All Orders</a>
+        </li>
+        <li>
+            <a href="${pageContext.request.contextPath}/logout">Log Out</a>
         </li>
     </ul>
 </nav>
