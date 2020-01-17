@@ -53,7 +53,7 @@
                 <c:out value="${item.price}"/>
             </td>
             <td>
-                <a href="${pageContext.request.contextPath}/servlet/bucket?item_id=${item.idItem}">Buy</a>
+                <a href="${pageContext.request.contextPath}/servlet/addToBucket?item_id=${item.idItem}">Buy</a>
             </td>
         </tr>
     </c:forEach>

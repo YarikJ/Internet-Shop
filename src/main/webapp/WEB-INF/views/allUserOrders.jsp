@@ -36,7 +36,7 @@
 <table border="1">
     <tr>
         <th>ID</th>
-        <th>Product name</th>
+        <th>Product Price</th>
     </tr>
     <c:forEach var="order" items="${orders}">
         <tr>
@@ -45,16 +45,8 @@
             </td>
             <td>
                 <table>
-                    <tr>
-                        <th>ID</th>
-                        <th>Product name</th>
-                        <th>Price</th>
-                    </tr>
                     <c:forEach var="item" items="${order.items}">
                         <tr>
-                            <td>
-                                <c:out value="${item.idItem}"/>
-                            </td>
                             <td>
                                 <c:out value="${item.name}"/>
                             </td>

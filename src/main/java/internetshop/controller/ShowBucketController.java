@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AddItemToBucketController extends HttpServlet {
+public class ShowBucketController extends HttpServlet {
     @Inject
     private static BucketService bucketService;
     @Inject
@@ -21,9 +21,11 @@ public class AddItemToBucketController extends HttpServlet {
             throws ServletException, IOException {
         Long userId = (Long) req.getSession().getAttribute("userId");
         Bucket bucket = bucketService.getByUserId(userId);
-        bucketService.addItem(bucket.getIdBucket(),
-                Long.valueOf(req.getParameter("item_id")));
-        req.getRequestDispatcher("allItems").forward(req, resp);
+        req.setAttribute("bucket", bucket);
+
+        if (bucket.getItems().isEmpty()) {
+            req.setAttribute("msg", "Bucket is empty");
+        }
+        req.getRequestDispatcher("/WEB-INF/views/bucket.jsp").forward(req, resp);
     }
 }
-

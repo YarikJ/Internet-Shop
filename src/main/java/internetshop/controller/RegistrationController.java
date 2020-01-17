@@ -1,9 +1,11 @@
 package internetshop.controller;
 
 import internetshop.lib.Inject;
+import internetshop.model.Role;
 import internetshop.model.User;
 import internetshop.service.UserService;
 import java.io.IOException;
+import java.util.Collections;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -26,10 +28,11 @@ public class RegistrationController extends HttpServlet {
             throws ServletException, IOException {
         User newUser = new User(req.getParameter("name"),
                 req.getParameter("psw"));
+        newUser.setRoles(Collections.singleton(Role.of("USER")));
 
         User user = userService.create(newUser);
 
-        HttpSession session = req.getSession(true);
+        HttpSession session = req.getSession();
         session.setAttribute("userId", user.getUserId());
 
         Cookie cookie = new Cookie("Mate", user.getToken());
