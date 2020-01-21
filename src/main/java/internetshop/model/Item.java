@@ -3,9 +3,15 @@ package internetshop.model;
 import java.util.Objects;
 
 public class Item {
-    private Long idItem;
+    private  Long idItem;
     private String name;
     private double price;
+
+    public Item(Long idItem, String name, double price) {
+        this.idItem = idItem;
+        this.name = name;
+        this.price = price;
+    }
 
     public Item(String name, double price) {
         this.name = name;

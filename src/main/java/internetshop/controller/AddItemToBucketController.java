@@ -23,6 +23,7 @@ public class AddItemToBucketController extends HttpServlet {
         Bucket bucket = bucketService.getByUserId(userId);
         bucketService.addItem(bucket.getIdBucket(),
                 Long.valueOf(req.getParameter("item_id")));
+
         req.getRequestDispatcher("allItems").forward(req, resp);
     }
 }
