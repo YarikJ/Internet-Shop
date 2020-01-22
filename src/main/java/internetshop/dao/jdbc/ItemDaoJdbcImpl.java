@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 @Dao
 public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
-    private static String dbName = "internet_shop";
+    private static final String DB_NAME = "internet_shop";
 
     public ItemDaoJdbcImpl(Connection connection) {
         super(connection);
@@ -26,20 +26,20 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     public Item create(Item item) {
         String query = String.format(Locale.ENGLISH,
                 "INSERT INTO %s.items(name, price) VALUES ('%s', %.2f);",
-                dbName, item.getName(), item.getPrice());
+                DB_NAME, item.getName(), item.getPrice());
 
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
             return item;
         } catch (SQLException e) {
-            logger.warn("Can't write to BD", e);
+            logger.warn("Can't write item to BD" + item.getName(), e);
         }
         return null;
     }
 
     @Override
     public Optional<Item> get(long id) {
-        String query = String.format("SELECT * FROM %s.items WHERE item_id=%d;", dbName, id);
+        String query = String.format("SELECT * FROM %s.items WHERE item_id=%d;", DB_NAME, id);
 
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
@@ -60,25 +60,25 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     public Item update(Item item) {
         String query = String.format(Locale.ENGLISH,
                 "UPDATE %s.items SET name='%s', price=%.2f WHERE item_id=%d;",
-                dbName, item.getName(), item.getPrice(), item.getIdItem());
+                DB_NAME, item.getName(), item.getPrice(), item.getIdItem());
 
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
             return item;
         } catch (SQLException e) {
-            logger.warn("Can't write to BD", e);
+            logger.warn("Can't update item in BD with id" + item.getIdItem(), e);
         }
         return null;
     }
 
     @Override
     public void delete(Long id) {
-        String query = String.format("DELETE FROM %s.items WHERE item_id=%d;", dbName, id);
+        String query = String.format("DELETE FROM %s.items WHERE item_id=%d;", DB_NAME, id);
 
         try (Statement stmt = connection.createStatement()) {
             stmt.executeUpdate(query);
         } catch (SQLException e) {
-            logger.warn("Can't write to BD", e);
+            logger.warn("Can't delete from BD item with id " + id, e);
         }
     }
 
@@ -90,7 +90,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     @Override
     public List<Item> getAllItems() {
         List<Item> items = new ArrayList<>();
-        String query = String.format("SELECT * FROM %s.items;", dbName);
+        String query = String.format("SELECT * FROM %s.items;", DB_NAME);
 
         try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);

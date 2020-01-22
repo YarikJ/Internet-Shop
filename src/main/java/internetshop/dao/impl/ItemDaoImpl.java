@@ -1,6 +1,7 @@
 package internetshop.dao.impl;
 
 import internetshop.dao.ItemDao;
+import internetshop.lib.Dao;
 import internetshop.model.Item;
 import internetshop.storage.Storage;
 
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@Dao
 public class ItemDaoImpl implements ItemDao {
     private static Long itemId = 0L;
 

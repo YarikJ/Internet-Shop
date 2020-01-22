@@ -3,7 +3,7 @@ package internetshop.model;
 import java.util.Objects;
 
 public class Item {
-    private  Long idItem;
+    private Long idItem;
     private String name;
     private double price;
 
