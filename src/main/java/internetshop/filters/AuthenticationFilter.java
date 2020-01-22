@@ -34,10 +34,12 @@ public class AuthenticationFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
+
         if (req.getCookies() == null) {
             processUnAuthenticated(req, resp);
             return;
         }
+
         for (Cookie cookie : req.getCookies()) {
             if (cookie.getName().equals("Mate")) {
                 Optional<User> user = userService.getByToken(cookie.getValue());
@@ -48,6 +50,7 @@ public class AuthenticationFilter implements Filter {
                 }
             }
         }
+
         logger.info("user was not authenticated");
         resp.sendRedirect(req.getContextPath() + "/login");
     }
@@ -59,6 +62,5 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
 }
