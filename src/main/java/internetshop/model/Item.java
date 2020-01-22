@@ -7,6 +7,12 @@ public class Item {
     private String name;
     private double price;
 
+    public Item(Long idItem, String name, double price) {
+        this.idItem = idItem;
+        this.name = name;
+        this.price = price;
+    }
+
     public Item(String name, double price) {
         this.name = name;
         this.price = price;
