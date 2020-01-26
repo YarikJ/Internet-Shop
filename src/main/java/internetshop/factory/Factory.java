@@ -7,7 +7,10 @@ import internetshop.dao.UserDao;
 import internetshop.dao.impl.BucketDaoImpl;
 import internetshop.dao.impl.OrderDaoImpl;
 import internetshop.dao.impl.UserDaoImpl;
+import internetshop.dao.jdbc.BucketDaoJdbcImpl;
 import internetshop.dao.jdbc.ItemDaoJdbcImpl;
+import internetshop.dao.jdbc.OrderDaoJdbcImpl;
+import internetshop.dao.jdbc.UserDaoJdbcImpl;
 import internetshop.service.BucketService;
 import internetshop.service.ItemService;
 import internetshop.service.OrderService;
@@ -30,7 +33,7 @@ public class Factory {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/internet_shop?"
-                    + "user=root&password=*********&"
+                    + "user=root&password=MateAcademy2020Yarik1992&"
                     + "serverTimezone=UTC");
         } catch (SQLException | ClassNotFoundException e) {
             logger.error("Can't establish connection to our BD ", e);
@@ -56,21 +59,21 @@ public class Factory {
 
     public static UserDao getUserDao() {
         if (userDao == null) {
-            userDao = new UserDaoImpl();
+            userDao = new UserDaoJdbcImpl(connection);
         }
         return userDao;
     }
 
     public static BucketDao getBucketDao() {
         if (bucketDao == null) {
-            bucketDao = new BucketDaoImpl();
+            bucketDao = new BucketDaoJdbcImpl(connection);
         }
         return bucketDao;
     }
 
     public static OrderDao getOrderDao() {
         if (orderDao == null) {
-            orderDao = new OrderDaoImpl();
+            orderDao = new OrderDaoJdbcImpl(connection);
         }
         return orderDao;
     }

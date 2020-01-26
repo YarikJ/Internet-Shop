@@ -14,7 +14,7 @@ public interface BucketService {
 
     boolean delete(Bucket bucket);
 
-    void addItem(Long idBucket, Long idItem);
+    void addItem(Long userId, Long idItem);
 
     void deleteItem(Bucket bucket, Item item);
 

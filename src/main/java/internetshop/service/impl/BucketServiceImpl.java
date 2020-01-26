@@ -34,7 +34,7 @@ public class BucketServiceImpl implements BucketService {
 
         return byUserId.orElseGet(()
                 -> bucketDao.create(new Bucket(userDao.get(userId).orElseThrow(()
-                        -> new NoSuchElementException("There is no user with id" + userId)))));
+                -> new NoSuchElementException("There is no user with id" + userId)))));
     }
 
     @Override
@@ -48,10 +48,12 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
-    public void addItem(Long idBucket, Long idItem) {
+    public void addItem(Long userId, Long idItem) {
         Item item = itemDao.get(idItem).orElseThrow(()
                 -> new NoSuchElementException("There is no item with id " + idItem));
-        getByBucketId(idBucket).getItems().add(item);
+        Bucket bucket = getByUserId(userId);
+        bucket.getItems().add(item);
+        update(bucket);
     }
 
     @Override

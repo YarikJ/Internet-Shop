@@ -11,6 +11,9 @@ public class User {
     private Long userId;
     private Set<Role> roles = new HashSet<>();
 
+    public User() {
+    }
+
     public User(String name, String password) {
         this.name = name;
         this.password = password;
