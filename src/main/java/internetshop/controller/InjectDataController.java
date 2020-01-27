@@ -17,6 +17,7 @@ public class InjectDataController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        /*
         User user = new User("Billie", "111");
         user.addRole(Role.of("USER"));
         userService.create(user);
@@ -26,5 +27,6 @@ public class InjectDataController extends HttpServlet {
         userService.create(admin);
 
         resp.sendRedirect(req.getContextPath() + "/shop");
+         */
     }
 }
