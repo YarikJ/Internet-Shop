@@ -4,17 +4,22 @@ import internetshop.dao.UserDao;
 import internetshop.lib.Dao;
 import internetshop.model.Role;
 import internetshop.model.User;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 import org.apache.log4j.Logger;
 
 @Dao
 public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
-    private static final String DB_NAME = "internet_shop.users";
 
     public UserDaoJdbcImpl(Connection connection) {
         super(connection);
@@ -23,8 +28,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     @Override
     public User create(User user) {
         user.setToken(getToken());
-        String query = "INSERT INTO users(user_name, user_pass, user_token)"
-                + " VALUES (?, ?, ?);";
+        String query = "INSERT INTO users(user_name, user_pass, user_token) VALUES (?, ?, ?);";
         String query2 = "INSERT INTO users_roles (user_id, role_id) VALUES (?, 2);";
 
         try (PreparedStatement stmt = connection.prepareStatement(query,
@@ -87,7 +91,6 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
         return Optional.empty();
     }
 
-
     @Override
     public User update(User user) {
         String query = "UPDATE users SET user_name=?, user_pass=? where user_id=?;";
@@ -142,9 +145,9 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 users.add(user);
             }
             for (int i = 0; i + 1 < users.size(); i++) {
-                if (users.get(i+1).getUserId().equals(users.get(i).getUserId())) {
-                    users.get(i).addRole((Role)users.get(i+1).getRoles().toArray()[0]);
-                    users.remove(i+1);
+                if (users.get(i + 1).getUserId().equals(users.get(i).getUserId())) {
+                    users.get(i).addRole((Role) users.get(i + 1).getRoles().toArray()[0]);
+                    users.remove(i + 1);
                 }
             }
         } catch (SQLException e) {

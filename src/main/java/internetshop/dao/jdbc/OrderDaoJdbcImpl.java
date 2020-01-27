@@ -8,11 +8,18 @@ import internetshop.lib.Inject;
 import internetshop.model.Item;
 import internetshop.model.Order;
 import internetshop.model.User;
-import org.apache.log4j.Logger;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import org.apache.log4j.Logger;
 
 @Dao
 public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
@@ -29,8 +36,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
     @Override
     public Order create(Order order) {
 
-        String query = "INSERT INTO orders(user_id)"
-                + " VALUES (?);";
+        String query = "INSERT INTO orders(user_id)  VALUES (?);";
         String query2 = "INSERT INTO orders_items (order_id, item_id) VALUES (?, ?);";
 
         try (PreparedStatement stmt = connection.prepareStatement(query,
@@ -49,47 +55,45 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             throw new RuntimeException();
         }
 
-        try (PreparedStatement stmt = connection.prepareStatement(query2)) {
-            stmt.setLong(1, order.getOrderId());
-            for (int i = 0; i < order.getItems().size(); i++) {
-                stmt.setLong(2, order.getItems().get(i).getIdItem());
-
-                stmt.executeUpdate();
-            }
-        } catch (SQLException e) {
-            logger.error("Couldn't add items to the order in DB for order id"
-                    + order.getOrderId(), e);
-            throw new RuntimeException();
-        }
+        insertItemsToOrder(order, query2);
         return order;
     }
 
     @Override
     public Optional<Order> get(Long idOrder) {
         String query = "SELECT user_id, orders.order_id, item_id FROM orders"
-                + " INNER JOIN orders_items ON orders.order_id = orders_items.order_id"
+                + " LEFT JOIN orders_items ON orders.order_id = orders_items.order_id"
                 + " WHERE orders.order_id = ?;";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setLong(1, idOrder);
 
             ResultSet result = stmt.executeQuery();
+            Order order = new Order();
 
             if (result.next()) {
-                Order order = new Order();
                 order.setOrderId(idOrder);
                 List<Item> items = new ArrayList<>();
                 order.setItems(items);
 
-                order.setUser(userDao.get(result.getLong("user_id")).get()); //TODO: get on optional without check
-                items.add(itemDao.get(result.getLong("item_id")).get());
+                long userId = result.getLong("user_id");
+                order.setUser(userDao.get(userId).orElseThrow(()
+                        -> new NoSuchElementException("Can't get user with id" + userId)));
+                long itemId = result.getLong("item_id");
+
+                if (itemId > 0) {
+                    items.add(itemDao.get(itemId).orElseThrow(()
+                            -> new NoSuchElementException("Can't get user with id" + itemId)));
+                }
 
                 while (result.next()) {
-                    items.add(itemDao.get(result.getLong("item_id")).get());
+                    long itemId1 = result.getLong("item_id");
+                    items.add(itemDao.get(itemId1).orElseThrow(()
+                            -> new NoSuchElementException("Can't get item with id" + itemId1)));
                 }
                 return Optional.of(order);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchElementException e) {
             logger.error("Could not get from DB order with id " + idOrder, e);
             throw new RuntimeException();
         }
@@ -100,12 +104,11 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
     public Order update(Order order) {
         String query = "DELETE FROM orders_items WHERE order_id=?;";
         String query2 = "INSERT INTO orders_items (order_id, item_id) VALUES (?, ?);";
-        int affected;
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setLong(1, order.getOrderId());
 
-            affected = stmt.executeUpdate();
+            stmt.executeUpdate();
 
         } catch (SQLException e) {
             logger.error("Couldn't delete items from order updating order with id"
@@ -113,21 +116,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             throw new RuntimeException();
         }
 
-        if (affected > 0) {
-            try (PreparedStatement stmt = connection.prepareStatement(query2)) {
-                List<Item> items = order.getItems();
-
-                for (int i = 0; i < items.size(); i++) {
-                    stmt.setLong(1, order.getOrderId());
-                    stmt.setLong(2, items.get(i).getIdItem());
-                    stmt.executeUpdate();
-                }
-            } catch (SQLException e) {
-                logger.error("Couldn't update items in the order in DB for order id"
-                        + order.getOrderId(), e);
-                throw new RuntimeException();
-            }
-        }
+        insertItemsToOrder(order, query2);
         return order;
     }
 
@@ -154,15 +143,32 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             stmt.setLong(1, user.getUserId());
 
             ResultSet result = stmt.executeQuery();
-            while(result.next()) {
+            while (result.next()) {
                 Long orderId = result.getLong("order_id");
-                orders.add(get(orderId).get());
+                orders.add(get(orderId).orElseThrow(()
+                        -> new NoSuchElementException("Can't get order with id" + orderId)));
             }
-
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchElementException e) {
             logger.error("Couldn't get all orders of user" + user.getUserId(), e);
             throw new RuntimeException();
         }
         return orders;
+    }
+
+    private void insertItemsToOrder(Order order, String query) {
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            List<Item> items = order.getItems();
+            stmt.setLong(1, order.getOrderId());
+
+            for (Item item : items) {
+                stmt.setLong(2, item.getIdItem());
+                stmt.executeUpdate();
+            }
+        } catch (SQLException e) {
+            logger.error("Couldn't update items in the order in DB for order id"
+                    + order.getOrderId(), e);
+            throw new RuntimeException();
+        }
+
     }
 }

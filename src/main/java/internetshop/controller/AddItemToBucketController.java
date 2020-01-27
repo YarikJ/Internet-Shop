@@ -1,7 +1,6 @@
 package internetshop.controller;
 
 import internetshop.lib.Inject;
-import internetshop.model.Bucket;
 import internetshop.service.BucketService;
 import internetshop.service.ItemService;
 import java.io.IOException;

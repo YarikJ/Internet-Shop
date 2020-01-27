@@ -7,11 +7,17 @@ import internetshop.lib.Dao;
 import internetshop.lib.Inject;
 import internetshop.model.Bucket;
 import internetshop.model.Item;
-import org.apache.log4j.Logger;
-import java.sql.*;
-import java.util.ArrayList;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import org.apache.log4j.Logger;
 
 @Dao
 public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao {
@@ -64,18 +70,24 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
                 bucket.setIdBucket(bucketId);
 
                 List<Item> items = bucket.getItems();
-
-                bucket.setUser(userDao.get(result.getLong("user_id")).get()); //TODO: get on optional without check
+                long userId = result.getLong("user_id");
+                bucket.setUser(userDao.get(userId).orElseThrow(()
+                        -> new NoSuchElementException("Can't get user with id" + userId)));
                 long itemId = result.getLong("item_id");
+
                 if (itemId > 0) {
-                    items.add(itemDao.get(itemId).get());
+                    items.add(itemDao.get(itemId).orElseThrow(()
+                            -> new NoSuchElementException("Can't get user with id" + itemId)));
                 }
+
                 while (result.next()) {
-                    items.add(itemDao.get(result.getLong("item_id")).get());
+                    long itemId1 = result.getLong("item_id");
+                    items.add(itemDao.get(result.getLong("item_id")).orElseThrow(()
+                            -> new NoSuchElementException("Can't get user with id" + itemId1)));
                 }
                 return Optional.of(bucket);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchElementException e) {
             logger.error("Could not get from DB order with id " + bucketId, e);
             throw new RuntimeException();
         }
@@ -98,19 +110,23 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
                 bucket.setIdBucket(result.getLong("bucket_id"));
                 List<Item> items = bucket.getItems();
 
-                bucket.setUser(userDao.get(userId).get()); //TODO: get on optional without check
+                bucket.setUser(userDao.get(userId).orElseThrow(()
+                        -> new NoSuchElementException("Can't get user with id" + userId)));
 
                 long itemId = result.getLong("item_id");
 
                 if (itemId > 0) {
-                    items.add(itemDao.get(itemId).get());
+                    items.add(itemDao.get(itemId).orElseThrow(()
+                            -> new NoSuchElementException("Can't get item with id" + itemId)));
                 }
                 while (result.next()) {
-                    items.add(itemDao.get(result.getLong("item_id")).get());
+                    long itemId1 = result.getLong("item_id");
+                    items.add(itemDao.get(itemId1).orElseThrow(()
+                            -> new NoSuchElementException("Can't get item with id" + itemId1)));
                 }
                 return Optional.of(bucket);
             }
-        } catch (SQLException e) {
+        } catch (SQLException | NoSuchElementException e) {
             logger.error("Could not get bucket  of user with id " + userId, e);
             throw new RuntimeException();
         }
@@ -121,7 +137,6 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
     public Bucket update(Bucket bucket) {
         String query = "DELETE FROM buckets_items WHERE bucket_id=?;";
         String query2 = "INSERT INTO buckets_items (bucket_id, item_id) VALUES (?, ?);";
-        int affected;
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setLong(1, bucket.getIdBucket());
@@ -136,10 +151,10 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
 
         try (PreparedStatement stmt = connection.prepareStatement(query2)) {
             List<Item> items = bucket.getItems();
+            stmt.setLong(1, bucket.getIdBucket());
 
-            for (int i = 0; i < items.size(); i++) {
-                stmt.setLong(1, bucket.getIdBucket());
-                stmt.setLong(2, items.get(i).getIdItem());
+            for (Item item : items) {
+                stmt.setLong(2, item.getIdItem());
                 stmt.executeUpdate();
             }
         } catch (SQLException e) {
