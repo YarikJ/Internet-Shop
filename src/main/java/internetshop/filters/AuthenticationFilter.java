@@ -1,5 +1,6 @@
 package internetshop.filters;
 
+import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.model.User;
 import internetshop.service.UserService;
@@ -42,11 +43,17 @@ public class AuthenticationFilter implements Filter {
 
         for (Cookie cookie : req.getCookies()) {
             if (cookie.getName().equals("Mate")) {
-                Optional<User> user = userService.getByToken(cookie.getValue());
-                if (user.isPresent()) {
-                    logger.info("User " + user.get().getName() + "was authenticated");
-                    chain.doFilter(req, resp);
-                    return;
+                try {
+                    Optional<User> user = userService.getByToken(cookie.getValue());
+                    if (user.isPresent()) {
+                        logger.info("User " + user.get().getName() + "was authenticated");
+                        chain.doFilter(req, resp);
+                        return;
+                    }
+                } catch (DataProcessingException e) {
+                    logger.error(e.getMessage(), e);
+                    req.getRequestDispatcher("/WEB-INF/views/exceptionOccur.jsp")
+                            .forward(req, resp);
                 }
             }
         }

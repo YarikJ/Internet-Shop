@@ -4,10 +4,12 @@ import static internetshop.model.Role.RoleName.ADMIN;
 
 import static internetshop.model.Role.RoleName.USER;
 
+import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.model.Role;
 import internetshop.model.User;
 import internetshop.service.UserService;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,9 +22,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 public class AuthorizationFilter implements Filter {
     @Inject
     private static UserService userService;
+
+    private static Logger logger = Logger.getLogger(AuthenticationFilter.class);
 
     private Map<String, Role.RoleName> protectedUrls = new HashMap<>();
 
@@ -46,12 +52,18 @@ public class AuthorizationFilter implements Filter {
 
         Role.RoleName roleName = protectedUrls.get(req.getServletPath());
         Long userId = (Long) req.getSession().getAttribute("userId");
-        User user = userService.get(userId);
-        if (roleName != null && !verifyRole(user, roleName)) {
-            processDenied(req, resp);
-            return;
+
+        try {
+            User user = userService.get(userId);
+            if (roleName != null && !verifyRole(user, roleName)) {
+                processDenied(req, resp);
+                return;
+            }
+            processAuthenticated(chain, req, resp);
+        } catch (DataProcessingException e) {
+            logger.error(e.getMessage(), e);
+            req.getRequestDispatcher("/WEB-INF/views/exceptionOccur.jsp").forward(req, resp);
         }
-        processAuthenticated(chain, req, resp);
     }
 
     private boolean verifyRole(User user, Role.RoleName roleName) {

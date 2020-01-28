@@ -1,13 +1,18 @@
 package internetshop.controller;
 
+import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.service.BucketService;
 import internetshop.service.ItemService;
+
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
 
 public class DeleteItemFromBucketController extends HttpServlet {
     @Inject
@@ -15,14 +20,21 @@ public class DeleteItemFromBucketController extends HttpServlet {
     @Inject
     private static ItemService itemService;
 
+    private static Logger logger = Logger.getLogger(DeleteItemFromBucketController.class);
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String itemId = req.getParameter("item_id");
+        Long itemId = Long.valueOf(req.getParameter("item_id"));
         Long userId = (Long) req.getSession().getAttribute("userId");
 
-        bucketService.deleteItem(bucketService.getByUserId(userId),
-                itemService.get(Long.valueOf(itemId)));
-        resp.sendRedirect(req.getContextPath() + "/servlet/bucket");
+        try {
+            bucketService.deleteItem(userId,itemId);
+            resp.sendRedirect(req.getContextPath() + "/servlet/bucket");
+        } catch (DataProcessingException e) {
+            logger.error(e.getMessage(), e);
+            req.setAttribute("msg", e);
+            req.getRequestDispatcher("/WEB-INF/views/exceptionOccur.jsp").forward(req, resp);
+        }
     }
 }
