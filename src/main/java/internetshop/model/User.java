@@ -1,6 +1,7 @@
 package internetshop.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -85,5 +86,11 @@ public class User {
 
     public void addRole(Role role) {
         roles.add(role);
+    }
+
+    public void addRoles(List<String> rolesList) {
+        for (String role : rolesList) {
+            roles.add(Role.of(role));
+        }
     }
 }

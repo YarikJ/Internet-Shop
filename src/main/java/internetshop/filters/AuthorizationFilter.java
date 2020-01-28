@@ -9,7 +9,6 @@ import internetshop.lib.Inject;
 import internetshop.model.Role;
 import internetshop.model.User;
 import internetshop.service.UserService;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -22,6 +21,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
 
 public class AuthorizationFilter implements Filter {
     @Inject

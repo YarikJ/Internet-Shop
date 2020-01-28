@@ -11,7 +11,6 @@ import internetshop.model.User;
 import internetshop.service.OrderService;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class OrderServiceImpl implements OrderService {

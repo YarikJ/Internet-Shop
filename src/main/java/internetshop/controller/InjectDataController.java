@@ -1,10 +1,10 @@
 package internetshop.controller;
 
 import internetshop.lib.Inject;
-import internetshop.model.Role;
-import internetshop.model.User;
 import internetshop.service.UserService;
+
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

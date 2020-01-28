@@ -8,7 +8,6 @@ import internetshop.model.Item;
 import internetshop.service.ItemService;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class ItemServiceImpl implements ItemService {

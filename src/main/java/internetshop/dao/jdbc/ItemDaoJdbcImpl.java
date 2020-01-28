@@ -23,9 +23,9 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
 
     @Override
     public Item create(Item item) throws DataProcessingException {
-        String query = "INSERT INTO items(name, price) VALUES (?, ?);";
+        String insertIntoItemsQuery = "INSERT INTO items(name, price) VALUES (?, ?);";
 
-        try (PreparedStatement stmt = connection.prepareStatement(query,
+        try (PreparedStatement stmt = connection.prepareStatement(insertIntoItemsQuery,
                 Statement.RETURN_GENERATED_KEYS)) {
 
             stmt.setString(1, item.getName());
@@ -43,9 +43,9 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
 
     @Override
     public Optional<Item> get(long id) throws DataProcessingException {
-        String query = "SELECT * FROM items WHERE item_id=?;";
+        String getItemQuery = "SELECT * FROM items WHERE item_id=?;";
 
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = connection.prepareStatement(getItemQuery)) {
             stmt.setLong(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -63,9 +63,9 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
 
     @Override
     public Item update(Item item) throws DataProcessingException {
-        String query = "UPDATE items SET name=?, price=? WHERE item_id=?;";
+        String updateItemQuery = "UPDATE items SET name=?, price=? WHERE item_id=?;";
 
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = connection.prepareStatement(updateItemQuery)) {
             stmt.setString(1, item.getName());
             stmt.setDouble(2, item.getPrice());
             stmt.setLong(3, item.getIdItem());
@@ -79,9 +79,9 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
 
     @Override
     public void delete(Long id) throws DataProcessingException {
-        String query = "DELETE FROM items WHERE item_id=?;";
+        String deleteItemQuery = "DELETE FROM items WHERE item_id=?;";
 
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = connection.prepareStatement(deleteItemQuery)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -90,16 +90,16 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     }
 
     @Override
-    public void delete(Item item) throws DataProcessingException{
+    public void delete(Item item) throws DataProcessingException {
         delete(item.getIdItem());
     }
 
     @Override
     public List<Item> getAllItems() throws DataProcessingException {
         List<Item> items = new ArrayList<>();
-        String query = "SELECT * FROM items;";
+        String getAllItemsQuery = "SELECT * FROM items;";
 
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = connection.prepareStatement(getAllItemsQuery)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 long itemId = rs.getLong("item_id");
