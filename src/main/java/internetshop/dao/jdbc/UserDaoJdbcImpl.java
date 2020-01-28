@@ -25,15 +25,16 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public User create(User user) throws DataProcessingException {
-        String queryInsert = "INSERT INTO users(user_name, user_pass, user_token) "
-                + "VALUES (?, ?, ?);";
+        String queryInsert = "INSERT INTO users(user_name, user_pass, user_salt, user_token) "
+                + "VALUES (?, ?, ?, ?);";
         String queryInsertRoles = "INSERT INTO users_roles (user_id, role_id) VALUES (?, 2);";
 
         try (PreparedStatement stmt = connection.prepareStatement(queryInsert,
                 Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getPassword());
-            stmt.setString(3, user.getToken());
+            stmt.setString(3, user.getSalt());
+            stmt.setString(4, user.getToken());
 
             stmt.executeUpdate();
 
@@ -74,7 +75,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
 
         try (PreparedStatement stmt = connection.prepareStatement(updateUserQuery)) {
             stmt.setString(1, user.getName());
-            stmt.setString(2, user.getPassword());
+            stmt.setString(2, user.getPassword()); //TODO: check on hashing new password
             stmt.setLong(3, user.getUserId());
 
             stmt.executeUpdate();
@@ -103,13 +104,13 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public List<User> getAll() throws DataProcessingException {
-        String getAllUsersQuery2 = "SELECT *, GROUP_CONCAT(role_name SEPARATOR ' ') "
+        String getAllUsersQuery = "SELECT *, GROUP_CONCAT(role_name SEPARATOR ' ') "
                 + "as role_names FROM users INNER JOIN users_roles USING (user_id) "
                 + "INNER JOIN roles using (role_id) group by user_id;";
 
         List<User> users = new ArrayList<>();
 
-        try (PreparedStatement stmt = connection.prepareStatement(getAllUsersQuery2)) {
+        try (PreparedStatement stmt = connection.prepareStatement(getAllUsersQuery)) {
 
             ResultSet result = stmt.executeQuery();
 
@@ -164,6 +165,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             user.setUserId(result.getLong("user_id"));
             user.setName(result.getString("user_name"));
             user.setPassword(result.getString("user_pass"));
+            user.setSalt(result.getString("user_salt"));
             user.setToken(result.getString("user_token"));
             user.addRole(Role.of(result.getString("role_name")));
 

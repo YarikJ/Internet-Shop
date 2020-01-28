@@ -33,8 +33,7 @@ public class RegistrationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        User newUser = new User(req.getParameter("name"),
-                req.getParameter("psw"));
+        User newUser = new User(req.getParameter("name"), req.getParameter("psw"));
         newUser.setRoles(Collections.singleton(Role.of("USER")));
         try {
             User user = userService.create(newUser);

@@ -7,6 +7,7 @@ import internetshop.lib.Inject;
 import internetshop.lib.Service;
 import internetshop.model.User;
 import internetshop.service.UserService;
+import internetshop.util.HashUtil;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +20,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) throws DataProcessingException {
+        byte[] salt = HashUtil.getSalt();
+        String hashPassword = HashUtil.hashPassword(user.getPassword(), salt);
+        user.setPassword(hashPassword);
+        user.setSalt(new String(salt));
         user.setToken(getToken());
         return userDao.create(user);
     }
@@ -31,6 +36,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User update(User user) throws DataProcessingException {
+        String hashPassword = HashUtil.hashPassword(user.getPassword(), user.getSalt().getBytes());
+        user.setPassword(hashPassword);
         return userDao.update(user);
     }
 
@@ -48,7 +55,8 @@ public class UserServiceImpl implements UserService {
     public User login(String name, String pass) throws AuthorizationException,
             DataProcessingException {
         Optional<User> user = userDao.login(name);
-        if (user.isEmpty() || !user.get().getPassword().equals(pass)) {
+        if (user.isEmpty() || !user.get().getPassword()
+                .equals(HashUtil.hashPassword(pass, user.get().getSalt().getBytes()))) {
             throw new AuthorizationException("incorrect user name or password");
         }
         return user.get();

@@ -15,6 +15,8 @@ CREATE TABLE `internet_shop`.`users` (
                                          `user_pass` VARCHAR(45) NOT NULL,
                                          `user_token` VARCHAR(100) NOT NULL,
                                          PRIMARY KEY (`user_id`));
+ALTER TABLE users ADD user_salt varchar(10000) NOT NULL AFTER user_pass;
+ALTER TABLE users MODIFY user_pass VARCHAR(10000) ;
 
 CREATE TABLE `internet_shop`.`orders` (
                                           `order_id` INT NOT NULL AUTO_INCREMENT,

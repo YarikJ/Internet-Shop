@@ -8,6 +8,7 @@ import java.util.Set;
 public class User {
     private String name;
     private String password;
+    private String salt;
     private String token;
     private Long userId;
     private Set<Role> roles = new HashSet<>();
@@ -18,6 +19,14 @@ public class User {
     public User(String name, String password) {
         this.name = name;
         this.password = password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 
     public String getName() {
