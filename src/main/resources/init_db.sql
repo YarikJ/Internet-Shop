@@ -1,3 +1,4 @@
+DROP SCHEMA IF EXISTS `internet_shop`;
 CREATE SCHEMA `internet_shop` DEFAULT CHARACTER SET utf8 ;
 CREATE TABLE `internet_shop`.`items` (
                                          `item_id` INT NOT NULL AUTO_INCREMENT,
@@ -73,11 +74,11 @@ CREATE TABLE `internet_shop`.`buckets_items` (
 
 
 CREATE TABLE `internet_shop`.`roles` (
-                                        `role_id` INT NOT NULL AUTO_INCREMENT,
-                                        `role_name` VARCHAR(45) NOT NULL,
-                                        PRIMARY KEY (`role_id`));
+                                         `role_id` INT NOT NULL AUTO_INCREMENT,
+                                         `role_name` VARCHAR(45) NOT NULL,
+                                         PRIMARY KEY (`role_id`));
 
-INSERT INTO roles (role_name) VALUES ('ADMIN'), ('USER');
+INSERT INTO `internet_shop`.`roles` (role_name) VALUES ('ADMIN'), ('USER');
 
 CREATE TABLE `internet_shop`.`users_roles` (
                                                `user_id` INT NOT NULL,

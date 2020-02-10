@@ -5,14 +5,15 @@ import internetshop.lib.Inject;
 import internetshop.model.Role;
 import internetshop.model.User;
 import internetshop.service.UserService;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 public class InjectDataController extends HttpServlet {
     @Inject
@@ -24,7 +25,7 @@ public class InjectDataController extends HttpServlet {
             throws ServletException, IOException {
 
         User admin = new User("ADMIN", "111");
-        admin.addRole(Role.of("ADMIN"));
+        admin.setRoles(Collections.singleton(Role.of("ADMIN")));
         try {
             userService.create(admin);
             resp.sendRedirect(req.getContextPath() + "/shop");

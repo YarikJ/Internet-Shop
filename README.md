@@ -53,12 +53,13 @@ Change a path to your Log file in **src/main/resources/log4j.properties** on lin
 
 
 To work with MySQL you need to:
-- Use file **src/main/resources/init_db.sql** to create schema and all the tables required by this app in MySQL DB
-- Change username and password to match with MySQL in **src/main/java/internetshop/factory/Factory.java** class on 33 line
+- Create schema and tables (use sql requests in **src/main/resources/init_db.sql** )
+- Replace * after user and password  on 33 line of **src/main/java/internetshop/factory/Factory.java** 
+class  with your name and password of MySql credentials.
 
 If you want to test code without establishing connection to database you can use inner storage option.
-To work with inner Storage you need to replace every object of Dao-layer 
-in **src/main/java/internetshop/factory/Factory.java** from *DaoJdbcImpl(connection) to *DaoImpl().  
+To work with inner storage you need to replace every object of Dao-layer 
+in **src/main/java/internetshop/factory/Factory.java** that ends with *DaoJdbcImpl(connection) with *DaoImpl().  
 Provide all necessary imports to corresponding classes. Comment out static code block of Factory class.
 
 
@@ -66,14 +67,8 @@ Run the project:
 
 Main page is at URL: .../{context_path}/shop
 
-To create default admin user run 
-For MySQL DAO only **on first run** of the project, for inner Storage **on every launch**, 
-to create default users open URL: .../{context_path}/inject
-
-
-By default there are one user with an USER role (login = "user", password = "123"),<br />
-one with an ADMIN role (login = "admin", password = "123"),<br />
-and one with both roles (login = "superuser", password = "123").
+To create default ADMIN user with login "ADMIN" and password "111" use URL: .../{context_path}/inject.
+Users with USER role are created during registration on URL: .../{context_path}/registration.
 
 ## Author
  [Yaroslava Bondarchuk](https://github.com/YarikJ)
