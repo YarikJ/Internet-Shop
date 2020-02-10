@@ -75,7 +75,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
 
         try (PreparedStatement stmt = connection.prepareStatement(updateUserQuery)) {
             stmt.setString(1, user.getName());
-            stmt.setString(2, user.getPassword()); //TODO: check on hashing new password
+            stmt.setString(2, user.getPassword());
             stmt.setLong(3, user.getUserId());
 
             stmt.executeUpdate();
