@@ -33,7 +33,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getPassword());
-            stmt.setString(3, user.getSalt());
+            stmt.setBytes(3, user.getSalt());
             stmt.setString(4, user.getToken());
 
             stmt.executeUpdate();
@@ -165,7 +165,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             user.setUserId(result.getLong("user_id"));
             user.setName(result.getString("user_name"));
             user.setPassword(result.getString("user_pass"));
-            user.setSalt(result.getString("user_salt"));
+            user.setSalt(result.getBytes("user_salt"));
             user.setToken(result.getString("user_token"));
             user.addRole(Role.of(result.getString("role_name")));
 
