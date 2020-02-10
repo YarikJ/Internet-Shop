@@ -6,13 +6,13 @@ CREATE TABLE `internet_shop`.`items` (
                                          PRIMARY KEY (`item_id`))
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8;
-INSERT INTO `internet_shop`.`items` (`name`, `price`) VALUES ('iPhone 11', '1000');
 
 
 CREATE TABLE `internet_shop`.`users` (
                                          `user_id` INT NOT NULL AUTO_INCREMENT,
                                          `user_name` VARCHAR(45) NOT NULL unique,
-                                         `user_pass` VARCHAR(45) NOT NULL,
+                                         `user_pass` VARCHAR(1000) NOT NULL,
+                                         `user_salt` VARBINARY(1000) NOT NULL,
                                          `user_token` VARCHAR(100) NOT NULL,
                                          PRIMARY KEY (`user_id`));
 
