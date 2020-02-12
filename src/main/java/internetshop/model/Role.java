@@ -3,16 +3,10 @@ package internetshop.model;
 import java.util.Objects;
 
 public class Role {
-    private final Long id;
+    private Long id;
     private RoleName roleName;
-    private static Long idProducer = 0L;
-
-    public Role() {
-        this.id = idProducer++;
-    }
 
     public Role(RoleName rolename) {
-        this();
         this.roleName = rolename;
     }
 

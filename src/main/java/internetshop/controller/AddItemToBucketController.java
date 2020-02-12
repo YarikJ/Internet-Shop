@@ -3,7 +3,6 @@ package internetshop.controller;
 import internetshop.exceptions.DataProcessingException;
 import internetshop.lib.Inject;
 import internetshop.service.BucketService;
-import internetshop.service.ItemService;
 
 import java.io.IOException;
 
@@ -17,10 +16,8 @@ import org.apache.log4j.Logger;
 public class AddItemToBucketController extends HttpServlet {
     @Inject
     private static BucketService bucketService;
-    @Inject
-    private static ItemService itemService;
 
-    private static Logger logger = Logger.getLogger(AddItemToBucketController.class);
+    private static final Logger LOGGER = Logger.getLogger(AddItemToBucketController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -31,7 +28,7 @@ public class AddItemToBucketController extends HttpServlet {
                     Long.valueOf(req.getParameter("item_id")));
             req.getRequestDispatcher("allItems").forward(req, resp);
         } catch (DataProcessingException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             req.setAttribute("msg", e);
             req.getRequestDispatcher("/WEB-INF/views/exceptionOccur.jsp").forward(req, resp);
         }

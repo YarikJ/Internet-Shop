@@ -19,7 +19,7 @@ public class GetAllItemsController extends HttpServlet {
     @Inject
     private static ItemService itemService;
 
-    private static Logger logger = Logger.getLogger(GetAllItemsController.class);
+    private static final Logger LOGGER = Logger.getLogger(GetAllItemsController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -28,7 +28,7 @@ public class GetAllItemsController extends HttpServlet {
         try {
             items = itemService.getAllItems();
         } catch (DataProcessingException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             req.setAttribute("msg", e);
             req.getRequestDispatcher("/WEB-INF/views/exceptionOccur.jsp");
         }

@@ -22,7 +22,7 @@ public class CompleteOrderController extends HttpServlet {
     @Inject
     private static BucketService bucketService;
 
-    private static Logger logger = Logger.getLogger(CompleteOrderController.class);
+    private static final Logger LOGGER = Logger.getLogger(CompleteOrderController.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
@@ -36,7 +36,7 @@ public class CompleteOrderController extends HttpServlet {
             req.setAttribute("order", order);
             req.getRequestDispatcher("/WEB-INF/views/userOrder.jsp").forward(req, resp);
         } catch (DataProcessingException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             req.setAttribute("msg", e);
             req.getRequestDispatcher("/WEB-INF/views/exceptionOccur.jsp").forward(req, resp);
         }

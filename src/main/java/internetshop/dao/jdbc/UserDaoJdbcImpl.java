@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @Dao
 public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
-
     public UserDaoJdbcImpl(Connection connection) {
         super(connection);
     }

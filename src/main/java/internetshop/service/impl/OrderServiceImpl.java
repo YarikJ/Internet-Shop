@@ -20,19 +20,8 @@ public class OrderServiceImpl implements OrderService {
     private static UserDao userDao;
 
     @Override
-    public Order getOrder(Long idOrder) throws DataProcessingException {
-        return orderDao.get(idOrder).orElseThrow(()
-                -> new DataProcessingException("There is no order with id" + idOrder));
-    }
-
-    @Override
     public Order update(Order order) throws DataProcessingException {
         return orderDao.update(order);
-    }
-
-    @Override
-    public boolean deleteOrder(Order order) throws DataProcessingException {
-        return orderDao.delete(order);
     }
 
     @Override
@@ -41,9 +30,7 @@ public class OrderServiceImpl implements OrderService {
 
         order.setItems(items);
         order.setUser(userDao.get(userId).get());
-        orderDao.create(order);
-
-        return order;
+        return orderDao.create(order);
     }
 
     @Override

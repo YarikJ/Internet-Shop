@@ -8,11 +8,8 @@ import internetshop.model.User;
 import java.util.List;
 
 public interface OrderService {
-    Order getOrder(Long idOrder) throws DataProcessingException;
 
     Order update(Order order) throws DataProcessingException;
-
-    boolean deleteOrder(Order order) throws DataProcessingException;
 
     Order completeOrder(List<Item> items, Long userId) throws DataProcessingException;
 

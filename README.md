@@ -67,7 +67,7 @@ Run the project:
 
 Main page is at URL: .../{context_path}/shop
 
-To create default ADMIN user with login "ADMIN" and password "111" use URL: .../{context_path}/inject.
+By default ADMIN user with login "ADMIN" and password "111" is created during schema creation. 
 Users with USER role are created during registration on URL: .../{context_path}/registration.
 
 ## Author
