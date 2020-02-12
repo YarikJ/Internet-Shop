@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @Dao
 public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
-
     public UserDaoJdbcImpl(Connection connection) {
         super(connection);
     }
@@ -27,7 +26,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     public User create(User user) throws DataProcessingException {
         String queryInsert = "INSERT INTO users(user_name, user_pass, user_salt, user_token) "
                 + "VALUES (?, ?, ?, ?);";
-        String queryInsertRoles = "INSERT INTO users_roles (user_id, role_id) VALUES (?, 2);";
+        String queryInsertRoles = "INSERT INTO users_roles (user_id, role_id) VALUES (?, ?);";
 
         try (PreparedStatement stmt = connection.prepareStatement(queryInsert,
                 Statement.RETURN_GENERATED_KEYS)) {
@@ -48,6 +47,11 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
 
         try (PreparedStatement stmt = connection.prepareStatement(queryInsertRoles)) {
             stmt.setLong(1, user.getUserId());
+            if (user.getRoles().contains(Role.of("USER"))) {
+                stmt.setLong(2, 2);
+            } else {
+                stmt.setLong(2, 1);
+            }
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DataProcessingException("Couldn't write role to the database", e);

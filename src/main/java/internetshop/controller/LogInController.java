@@ -21,7 +21,7 @@ public class LogInController extends HttpServlet {
     @Inject
     private static UserService userService;
 
-    private static Logger logger = Logger.getLogger(LogInController.class);
+    private static final Logger LOGGER = Logger.getLogger(LogInController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -43,12 +43,12 @@ public class LogInController extends HttpServlet {
             resp.addCookie(cookie);
             resp.sendRedirect(req.getContextPath() + "/shop");
         } catch (DataProcessingException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             req.setAttribute("msg", e);
             req.getRequestDispatcher("/WEB-INF/views/exceptionOccur.jsp")
                     .forward(req, resp);
         } catch (AuthorizationException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             req.setAttribute("errorMsg", "incorrect name or password");
             req.getRequestDispatcher("/WEB-INF/views/logIn.jsp").forward(req, resp);
         }

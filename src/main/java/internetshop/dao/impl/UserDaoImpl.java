@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Dao
 public class UserDaoImpl implements UserDao {
-    private static Long userId = 0L;
+    private static Long userId = 1L;
 
     @Override
     public User create(User user) {

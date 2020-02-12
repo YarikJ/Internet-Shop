@@ -1,3 +1,4 @@
+DROP SCHEMA IF EXISTS `internet_shop`;
 CREATE SCHEMA `internet_shop` DEFAULT CHARACTER SET utf8 ;
 CREATE TABLE `internet_shop`.`items` (
                                          `item_id` INT NOT NULL AUTO_INCREMENT,
@@ -73,11 +74,11 @@ CREATE TABLE `internet_shop`.`buckets_items` (
 
 
 CREATE TABLE `internet_shop`.`roles` (
-                                        `role_id` INT NOT NULL AUTO_INCREMENT,
-                                        `role_name` VARCHAR(45) NOT NULL,
-                                        PRIMARY KEY (`role_id`));
+                                         `role_id` INT NOT NULL AUTO_INCREMENT,
+                                         `role_name` VARCHAR(45) NOT NULL,
+                                         PRIMARY KEY (`role_id`));
 
-INSERT INTO roles (role_name) VALUES ('ADMIN'), ('USER');
+INSERT INTO `internet_shop`.`roles` (role_name) VALUES ('ADMIN'), ('USER');
 
 CREATE TABLE `internet_shop`.`users_roles` (
                                                `user_id` INT NOT NULL,
@@ -94,3 +95,5 @@ CREATE TABLE `internet_shop`.`users_roles` (
                                                        REFERENCES `internet_shop`.`roles` (`role_id`)
                                                        ON DELETE cascade
                                                        ON UPDATE cascade);
+INSERT INTO `internet_shop`.`users`(user_name, user_pass, user_salt, user_token) VALUES ('ADMIN', 'bd90cd56dc1cf1367c4326ddebb35c7b03e50978aa111f0ebc360a39c0ffb49619eb2f92d85a4b5fd04341ee332b496bf3b7c07d43505543544585439e8307c8', x'4C940A94CA7FC6B5CCCACD9D8C40E889', 'ec184950-20d4-471d-b637-126bd938d3f5');
+INSERT INTO `internet_shop`.`users_roles` VALUES (1, 1);

@@ -23,10 +23,10 @@ import org.apache.log4j.Logger;
 public class AuthenticationFilter implements Filter {
     @Inject
     private static UserService userService;
-    private static Logger logger = Logger.getLogger(AuthenticationFilter.class);
+    private static final Logger LOGGER = Logger.getLogger(AuthenticationFilter.class);
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 
@@ -46,19 +46,19 @@ public class AuthenticationFilter implements Filter {
                 try {
                     Optional<User> user = userService.getByToken(cookie.getValue());
                     if (user.isPresent()) {
-                        logger.info("User " + user.get().getName() + "was authenticated");
+                        LOGGER.info("User " + user.get().getName() + "was authenticated");
                         chain.doFilter(req, resp);
                         return;
                     }
                 } catch (DataProcessingException e) {
-                    logger.error(e.getMessage(), e);
+                    LOGGER.error(e.getMessage(), e);
                     req.getRequestDispatcher("/WEB-INF/views/exceptionOccur.jsp")
                             .forward(req, resp);
                 }
             }
         }
 
-        logger.info("user was not authenticated");
+        LOGGER.info("user was not authenticated");
         resp.sendRedirect(req.getContextPath() + "/login");
     }
 

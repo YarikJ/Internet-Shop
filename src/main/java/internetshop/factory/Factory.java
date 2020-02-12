@@ -22,7 +22,7 @@ import java.sql.SQLException;
 import org.apache.log4j.Logger;
 
 public class Factory {
-    private static Logger logger = Logger.getLogger(Factory.class);
+    private static final Logger LOGGER = Logger.getLogger(Factory.class);
     private static Connection connection;
 
     static {
@@ -33,7 +33,7 @@ public class Factory {
                     + "user=root&password=MateAcademy2020Yarik1992&"
                     + "serverTimezone=UTC");
         } catch (SQLException | ClassNotFoundException e) {
-            logger.error("Can't establish connection to our BD ", e);
+            LOGGER.error("Can't establish connection to our BD ", e);
         }
     }
 

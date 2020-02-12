@@ -12,7 +12,7 @@ public interface OrderDao {
 
     Optional<Order> get(Long idOrder) throws DataProcessingException;
 
-    public Order update(Order order) throws DataProcessingException;
+    Order update(Order order) throws DataProcessingException;
 
     boolean delete(Order order) throws DataProcessingException;
 

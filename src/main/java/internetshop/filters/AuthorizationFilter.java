@@ -28,12 +28,12 @@ public class AuthorizationFilter implements Filter {
     @Inject
     private static UserService userService;
 
-    private static Logger logger = Logger.getLogger(AuthenticationFilter.class);
+    private static final Logger LOGGER = Logger.getLogger(AuthenticationFilter.class);
 
     private Map<String, Role.RoleName> protectedUrls = new HashMap<>();
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         protectedUrls.put("/servlet/getAllUsers", ADMIN);
         protectedUrls.put("/servlet/item", ADMIN);
         protectedUrls.put("/servlet/deleteItem", ADMIN);
@@ -61,7 +61,7 @@ public class AuthorizationFilter implements Filter {
             }
             processAuthenticated(chain, req, resp);
         } catch (DataProcessingException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             req.getRequestDispatcher("/WEB-INF/views/exceptionOccur.jsp").forward(req, resp);
         }
     }

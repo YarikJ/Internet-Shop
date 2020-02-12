@@ -22,7 +22,7 @@ public class GetAllUserOrdersController extends HttpServlet {
     @Inject
     private static UserService userService;
 
-    private static Logger logger = Logger.getLogger(ShowBucketController.class);
+    private static final Logger LOGGER = Logger.getLogger(ShowBucketController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -34,7 +34,7 @@ public class GetAllUserOrdersController extends HttpServlet {
             req.getRequestDispatcher("/WEB-INF/views/allUserOrders.jsp")
                     .forward(req, resp);
         } catch (DataProcessingException e) {
-            logger.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             req.setAttribute("msg", e);
             req.getRequestDispatcher("/WEB-INF/views/exceptionOccur.jsp").forward(req, resp);
         }

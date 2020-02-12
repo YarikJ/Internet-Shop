@@ -19,7 +19,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>allUsers</servlet-name>
-        <url-pattern>/servlet/getAllUsers</url-pattern>
+        <url-pattern>/servlet/allUsers</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -119,15 +119,6 @@
     <servlet-mapping>
         <servlet-name>allOrders</servlet-name>
         <url-pattern>/servlet/allOrders</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>injectData</servlet-name>
-        <servlet-class>internetshop.controller.InjectDataController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>injectData</servlet-name>
-        <url-pattern>/inject</url-pattern>
     </servlet-mapping>
 
     <servlet>
